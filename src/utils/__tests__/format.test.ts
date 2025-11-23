@@ -30,17 +30,20 @@ describe('Format Utilities', () => {
 
   describe('formatCurrency', () => {
     it('should format currency correctly', () => {
-      expect(formatCurrency(1000)).toBe('R$ 1.000,00');
-      expect(formatCurrency(1234.56)).toBe('R$ 1.234,56');
-      expect(formatCurrency(0)).toBe('R$ 0,00');
+      const normalize = (str: string) => str.replace(/\u00A0/g, ' ');
+      expect(normalize(formatCurrency(1000))).toBe('R$ 1.000,00');
+      expect(normalize(formatCurrency(1234.56))).toBe('R$ 1.234,56');
+      expect(normalize(formatCurrency(0))).toBe('R$ 0,00');
     });
 
     it('should handle large numbers', () => {
-      expect(formatCurrency(1000000)).toBe('R$ 1.000.000,00');
+      const normalize = (str: string) => str.replace(/\u00A0/g, ' ');
+      expect(normalize(formatCurrency(1000000))).toBe('R$ 1.000.000,00');
     });
 
     it('should handle decimal values', () => {
-      expect(formatCurrency(99.99)).toBe('R$ 99,99');
+      const normalize = (str: string) => str.replace(/\u00A0/g, ' ');
+      expect(normalize(formatCurrency(99.99))).toBe('R$ 99,99');
     });
   });
 

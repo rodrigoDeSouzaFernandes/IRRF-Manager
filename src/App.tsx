@@ -1,12 +1,7 @@
-import EmployeeForm from "./components/EmployeeForm/EmployeeForm";
+import Home from "./pages/Home/Home";
 
 function App() {
-  return (
-    <>
-    oi
-      <EmployeeForm />
-    </>
-  );
+  return <Home />;
 }
 
 export default App;
