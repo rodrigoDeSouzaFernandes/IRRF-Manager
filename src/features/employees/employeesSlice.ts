@@ -6,8 +6,52 @@ interface EmployeesState {
   list: Employee[];
 }
 
+// Dados fake iniciais para demonstração
+const getInitialEmployees = (): Employee[] => {
+  const fakeEmployees: Omit<Employee, 'baseSalary' | 'IRRFdiscount'>[] = [
+    {
+      name: 'João Silva',
+      cpf: '12345678901',
+      grossSalary: 5000,
+      descontoPrevidencia: 500,
+      dependents: 2,
+    },
+    {
+      name: 'Maria Santos',
+      cpf: '98765432100',
+      grossSalary: 3000,
+      descontoPrevidencia: 300,
+      dependents: 1,
+    },
+    {
+      name: 'Pedro Oliveira',
+      cpf: '11122233344',
+      grossSalary: 8000,
+      descontoPrevidencia: 800,
+      dependents: 0,
+    },
+    {
+      name: 'Ana Costa',
+      cpf: '55566677788',
+      grossSalary: 2500,
+      descontoPrevidencia: 250,
+      dependents: 3,
+    },
+  ];
+
+  return fakeEmployees.map((emp) => {
+    const baseSalary = calculateBaseSalary(
+      emp.grossSalary,
+      emp.descontoPrevidencia,
+      emp.dependents
+    );
+    const IRRFdiscount = calculateIRRF(baseSalary);
+    return { ...emp, baseSalary, IRRFdiscount };
+  });
+};
+
 const initialState: EmployeesState = {
-  list: [],
+  list: getInitialEmployees(),
 };
 
 const employeesSlice = createSlice({
@@ -15,24 +59,24 @@ const employeesSlice = createSlice({
   initialState,
   reducers: {
     addEmployee: (state, action: PayloadAction<Employee>) => {
-      const salarioBase = calculateBaseSalary(
-        action.payload.salarioBruto,
+      const baseSalary = calculateBaseSalary(
+        action.payload.grossSalary,
         action.payload.descontoPrevidencia,
-        action.payload.dependentes
+        action.payload.dependents
       );
-      const descontoIRRF = calculateIRRF(salarioBase);
-      state.list.push({ ...action.payload, salarioBase, descontoIRRF });
+      const IRRFdiscount = calculateIRRF(baseSalary);
+      state.list.push({ ...action.payload, baseSalary, IRRFdiscount });
     },
     updateEmployee: (state, action: PayloadAction<Employee>) => {
       const index = state.list.findIndex(emp => emp.cpf === action.payload.cpf);
       if (index !== -1) {
-        const salarioBase = calculateBaseSalary(
-          action.payload.salarioBruto,
+        const baseSalary = calculateBaseSalary(
+          action.payload.grossSalary,
           action.payload.descontoPrevidencia,
-          action.payload.dependentes
+          action.payload.dependents
         );
-        const descontoIRRF = calculateIRRF(salarioBase);
-        state.list[index] = { ...action.payload, salarioBase, descontoIRRF };
+        const IRRFdiscount = calculateIRRF(baseSalary);
+        state.list[index] = { ...action.payload, baseSalary, IRRFdiscount };
       }
     },
     deleteEmployee: (state, action: PayloadAction<string>) => {

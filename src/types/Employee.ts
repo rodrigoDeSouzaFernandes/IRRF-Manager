@@ -1,9 +1,9 @@
 export interface Employee {
-  nome: string;
+  name: string;
   cpf: string;
-  salarioBruto: number;
+  grossSalary: number;
   descontoPrevidencia: number;
-  dependentes: number;
-  salarioBase?: number;
-  descontoIRRF?: number;
+  dependents: number;
+  baseSalary?: number;
+  IRRFdiscount?: number;
 }
