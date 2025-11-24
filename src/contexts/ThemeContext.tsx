@@ -1,8 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
 import type { ReactNode } from "react";
-import {
-  ThemeProvider as MUIThemeProvider,
-} from "@mui/material/styles";
+import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createAppTheme } from "../theme/theme";
 
@@ -43,9 +47,11 @@ export const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
 
+  const theme = useMemo(() => createAppTheme(mode), [mode]);
+
   return (
     <ThemeContext.Provider value={{ mode, toggleMode }}>
-      <MUIThemeProvider theme={createAppTheme(mode)}>
+      <MUIThemeProvider theme={theme}>
         <CssBaseline />
         {children}
       </MUIThemeProvider>
