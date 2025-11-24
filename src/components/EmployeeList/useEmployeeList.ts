@@ -7,6 +7,7 @@ import {
   deleteEmployee,
   updateEmployee,
 } from "../../features/employees/employeesSlice";
+import type { EmployeeFormInput } from "../EmployeeFormModal/EmployeeFormModal";
 
 export const useEmployeeList = () => {
   const employees = useSelector((state: RootState) => state.employees.list);
@@ -18,6 +19,7 @@ export const useEmployeeList = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null
   );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const filteredEmployees = useMemo(() => {
     return employees.filter((emp) => {
@@ -31,7 +33,7 @@ export const useEmployeeList = () => {
 
   const handleEdit = (employee: Employee) => {
     setSelectedEmployee(employee);
-    // TODO: Implement edit modal
+    setIsEditModalOpen(true);
   };
 
   const handleDelete = (employee: Employee) => {
@@ -39,13 +41,7 @@ export const useEmployeeList = () => {
     // TODO: Implement delete modal
   };
 
-  const handleEditSubmit = (data: {
-    name: string;
-    cpf: string;
-    grossSalary: string | number;
-    descontoPrevidencia: string | number;
-    dependents: number;
-  }) => {
+  const handleEditSubmit = (data: EmployeeFormInput) => {
     if (selectedEmployee) {
       const grossSalary =
         typeof data.grossSalary === "string"
@@ -65,7 +61,12 @@ export const useEmployeeList = () => {
         } as Employee)
       );
     }
-    // TODO: Implement edit modal
+    setIsEditModalOpen(false);
+    setSelectedEmployee(null);
+  };
+
+  const handleEditClose = () => {
+    setIsEditModalOpen(false);
     setSelectedEmployee(null);
   };
 
@@ -87,6 +88,7 @@ export const useEmployeeList = () => {
     handleEdit,
     handleDelete,
     handleEditSubmit,
+    handleEditClose,
     handleDeleteConfirm,
     handleClearFilters,
     filterSidebarOpen,
@@ -94,7 +96,8 @@ export const useEmployeeList = () => {
     filterCPF,
     filterName,
     setFilterCPF,
-    setFilterName
-
+    setFilterName,
+    selectedEmployee,
+    isEditModalOpen,
   };
 };

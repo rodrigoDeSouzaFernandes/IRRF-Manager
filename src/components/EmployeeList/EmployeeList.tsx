@@ -18,6 +18,7 @@ import { formatCPF, formatCurrency } from "../../utils/format";
 import { useEmployeeList } from "./useEmployeeList";
 import { FilterButton } from "../FilterSidebar/FilterButton";
 import FilterSidebar from "../FilterSidebar/FilterSidebar";
+import EmployeeFormModal from "../EmployeeFormModal/EmployeeFormModal";
 
 const EmployeeList: React.FC = () => {
   const {
@@ -25,7 +26,7 @@ const EmployeeList: React.FC = () => {
     handleEdit,
     handleDelete,
     handleEditSubmit,
-    handleDeleteConfirm,
+    handleEditClose,
     handleClearFilters,
     filterSidebarOpen,
     setFilterSidebarOpen,
@@ -33,6 +34,8 @@ const EmployeeList: React.FC = () => {
     filterCPF,
     setFilterName,
     setFilterCPF,
+    selectedEmployee,
+    isEditModalOpen,
   } = useEmployeeList();
 
   return (
@@ -144,6 +147,13 @@ const EmployeeList: React.FC = () => {
         onFilterCPFChange={setFilterCPF}
         onClearFilters={handleClearFilters}
         employeeCount={filteredEmployees.length}
+      />
+      <EmployeeFormModal
+        open={isEditModalOpen}
+        onClose={handleEditClose}
+        onSubmit={handleEditSubmit}
+        employee={selectedEmployee}
+        title="Editar funcionário"
       />
     </>
   );
