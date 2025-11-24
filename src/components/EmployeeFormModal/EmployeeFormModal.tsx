@@ -9,9 +9,6 @@ import {
   DialogActions,
   Button,
   TextField,
-  Box,
-  Stack,
-  IconButton,
 } from "@mui/material";
 
 import Grid from "@mui/material/Grid";
@@ -24,7 +21,6 @@ import {
   formatCurrency,
 } from "../../utils/format";
 import CurrencyInput from "../CurrencyInput/CurrencyInput";
-import { Add, Remove } from "@mui/icons-material";
 
 const employeeSchema = z.object({
   name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
@@ -52,7 +48,7 @@ const employeeSchema = z.object({
     .min(0, "Campo obrigatório, insira um numero maior ou igual a zero"),
 });
 
-type EmployeeFormInput = z.infer<typeof employeeSchema>;
+export type EmployeeFormInput = z.infer<typeof employeeSchema>;
 
 interface EmployeeFormModalProps {
   open: boolean;
