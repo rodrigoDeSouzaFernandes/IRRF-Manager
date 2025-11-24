@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 
 import Header from "../../components/Header/Header";
 import EmployeeList from "../../components/EmployeeList/EmployeeList";
@@ -31,19 +31,19 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Box
-        sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-      >
+      <Box>
         <Header />
-        <Button
-          variant="contained"
-          sx={{ width: "fit-content", ml: "auto" }}
-          onClick={() => setCreateEmployeeModalOPen(true)}
-        >
-          <Add sx={{ width: 18, mr: 1 }} />
-          Add new employee
-        </Button>
-        <EmployeeList />
+        <Container>
+          <Button
+            variant="contained"
+            sx={{ width: "fit-content", ml: "auto", mt: 2 }}
+            onClick={() => setCreateEmployeeModalOPen(true)}
+          >
+            <Add sx={{ width: 18, mr: 1 }} />
+            Add new employee
+          </Button>
+          <EmployeeList />
+        </Container>
       </Box>
       <EmployeeFormModal
         open={createEmployeeModalOpen}
