@@ -5,7 +5,9 @@ export function calculateBaseSalary(
   pensionDiscount: number,
   dependents: number
 ): number {
-  return grossSalary - pensionDiscount - dependents * DEPENDENT_DEDUCTION;
+  const baseSalary =
+    grossSalary - pensionDiscount - dependents * DEPENDENT_DEDUCTION;
+  return baseSalary >= 0 ? baseSalary : 0;
 }
 
 export function calculateIRRF(grossSalary: number): number {
