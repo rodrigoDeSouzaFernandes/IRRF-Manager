@@ -8,12 +8,10 @@ import {
   TableRow,
   TableContainer,
   Paper,
-  IconButton,
   Box,
   Typography,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+
 import { formatCPF, formatCurrency } from "../../utils/format";
 import { useEmployeeList } from "./useEmployeeList";
 import { FilterButton } from "../FilterSidebar/FilterButton";
@@ -21,6 +19,7 @@ import FilterSidebar from "../FilterSidebar/FilterSidebar";
 import EmployeeFormModal from "../EmployeeFormModal/EmployeeFormModal";
 import DeleteEmployeeModal from "../DeleteEmployeeModal/DeleteEmployeeModal";
 import type { Employee } from "../../types/Employee";
+import { ActionMenu } from "./ActionMenu";
 
 const EmployeeList: React.FC = () => {
   const {
@@ -45,52 +44,74 @@ const EmployeeList: React.FC = () => {
 
   return (
     <>
-      <Paper elevation={4} sx={{ mt: 2, mb: 4, p: 3 }}>
+      <Paper
+        elevation={0}
+        sx={{
+          mt: 2,
+          mb: 4,
+          p: { xs: 2, sm: 3 },
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: 2,
+        }}
+      >
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mb: 3,
+            mb: 2,
           }}
         >
-          <Typography variant="h6">Lista de Funcionários</Typography>
+          <Typography variant="h6" fontWeight={600}>
+            Lista de Funcionários
+          </Typography>
           <FilterButton onClick={() => setFilterSidebarOpen(true)} />
         </Box>
-        <TableContainer>
-          <Table>
+        <TableContainer
+          sx={{
+            "&::-webkit-scrollbar": {
+              height: 8,
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "transparent",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "rgba(0,0,0,0.2)",
+              borderRadius: 4,
+            },
+          }}
+        >
+          <Table size="small" sx={{ minWidth: 800 }}>
             <TableHead>
-              <TableRow>
-                <TableCell>
-                  <strong>Nome</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>CPF</strong>
-                </TableCell>
-                <TableCell align="right">
-                  <strong>Salário Bruto</strong>
-                </TableCell>
-                <TableCell align="right">
-                  <strong>Desconto Previdência</strong>
-                </TableCell>
-                <TableCell align="center">
-                  <strong>Dependentes</strong>
-                </TableCell>
-                <TableCell align="right">
-                  <strong>Salário Base IR</strong>
-                </TableCell>
-                <TableCell align="right">
-                  <strong>Desconto IRRF</strong>
-                </TableCell>
-                <TableCell align="center">
-                  <strong>Ações</strong>
+              <TableRow
+                sx={{
+                  backgroundColor: "action.hover",
+                  "& th": {
+                    fontWeight: 600,
+                    fontSize: "0.875rem",
+                    py: 1.5,
+                    borderBottom: "2px solid",
+                    borderColor: "divider",
+                  },
+                }}
+              >
+                <TableCell>Nome</TableCell>
+                <TableCell>CPF</TableCell>
+                <TableCell align="right">Salário Bruto</TableCell>
+                <TableCell align="right">Desconto Previdência</TableCell>
+                <TableCell align="center">Dependentes</TableCell>
+                <TableCell align="right">Salário Base IR</TableCell>
+                <TableCell align="right">Desconto IRRF</TableCell>
+                <TableCell align="center" sx={{ width: 60 }}>
+                  Ações
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredEmployees.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} align="center">
+                  <TableCell colSpan={8} align="center" sx={{ py: 4 }}>
                     <Typography variant="body2" color="text.secondary">
                       Nenhum funcionário encontrado
                     </Typography>
@@ -98,43 +119,65 @@ const EmployeeList: React.FC = () => {
                 </TableRow>
               ) : (
                 filteredEmployees.map((employee) => (
-                  <TableRow key={employee.cpf} hover>
-                    <TableCell>{employee.name}</TableCell>
-                    <TableCell>{formatCPF(employee.cpf)}</TableCell>
-                    <TableCell align="right">
-                      {formatCurrency(employee.grossSalary)}
+                  <TableRow
+                    key={employee.cpf}
+                    hover
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "action.hover",
+                      },
+                      "& td": {
+                        py: 1.25,
+                        borderBottom: "1px solid",
+                        borderColor: "divider",
+                      },
+                    }}
+                  >
+                    <TableCell>
+                      <Typography variant="body2" fontWeight={500}>
+                        {employee.name}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" color="text.secondary">
+                        {formatCPF(employee.cpf)}
+                      </Typography>
                     </TableCell>
                     <TableCell align="right">
-                      {formatCurrency(employee.descontoPrevidencia)}
-                    </TableCell>
-                    <TableCell align="center">{employee.dependents}</TableCell>
-                    <TableCell align="right">
-                      {employee.baseSalary
-                        ? formatCurrency(employee.baseSalary)
-                        : "-"}
+                      <Typography variant="body2" fontWeight={500}>
+                        {formatCurrency(employee.grossSalary)}
+                      </Typography>
                     </TableCell>
                     <TableCell align="right">
-                      {employee.IRRFdiscount
-                        ? formatCurrency(employee.IRRFdiscount)
-                        : "-"}
+                      <Typography variant="body2" color="text.secondary">
+                        {formatCurrency(employee.descontoPrevidencia)}
+                      </Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <IconButton
-                        color="primary"
-                        size="small"
-                        onClick={() => handleEdit(employee)}
-                        aria-label="editar"
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        size="small"
-                        onClick={() => handleDelete(employee)}
-                        aria-label="excluir"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <Typography variant="body2">
+                        {employee.dependents}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="body2" color="text.secondary">
+                        {employee.baseSalary
+                          ? formatCurrency(employee.baseSalary)
+                          : "-"}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="body2" color="text.secondary">
+                        {employee.IRRFdiscount
+                          ? formatCurrency(employee.IRRFdiscount)
+                          : "-"}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <ActionMenu
+                        employee={employee}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
