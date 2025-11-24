@@ -70,6 +70,8 @@ const EmployeeList: React.FC = () => {
         </Box>
         <TableContainer
           sx={{
+            maxHeight: "calc(100vh - 300px)", // define a altura do container
+            overflowY: "auto",
             "&::-webkit-scrollbar": {
               height: 8,
             },
@@ -83,7 +85,15 @@ const EmployeeList: React.FC = () => {
           }}
         >
           <Table size="small" sx={{ minWidth: 800 }}>
-            <TableHead>
+            <TableHead
+              sx={{
+                position: "sticky",
+                top: "0",
+                backgroundColor: "background.paper",
+                opacity: 1,
+                zIndex: 1,
+              }}
+            >
               <TableRow
                 sx={{
                   backgroundColor: "action.hover",
@@ -98,11 +108,19 @@ const EmployeeList: React.FC = () => {
               >
                 <TableCell>Nome</TableCell>
                 <TableCell>CPF</TableCell>
-                <TableCell align="right">Salário Bruto</TableCell>
-                <TableCell align="right">Desconto Previdência</TableCell>
+                <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                  Salário Bruto
+                </TableCell>
+                <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                  Desconto Previdência
+                </TableCell>
                 <TableCell align="center">Dependentes</TableCell>
-                <TableCell align="right">Salário Base IR</TableCell>
-                <TableCell align="right">Desconto IRRF</TableCell>
+                <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                  Salário Base IR
+                </TableCell>
+                <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                  Desconto IRRF
+                </TableCell>
                 <TableCell align="center" sx={{ width: 60 }}>
                   Ações
                 </TableCell>

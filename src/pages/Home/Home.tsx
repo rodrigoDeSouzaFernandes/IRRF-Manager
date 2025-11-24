@@ -40,14 +40,14 @@ const Home: React.FC = () => {
             onClick={() => setCreateEmployeeModalOPen(true)}
           >
             <Add sx={{ width: 18, mr: 1 }} />
-            Add new employee
+            Cadastrar Funcionário
           </Button>
           <EmployeeList />
         </Container>
       </Box>
       <EmployeeFormModal
         open={createEmployeeModalOpen}
-        title="Add new employee"
+        title="Cadastrar Funcionário"
         onClose={() => setCreateEmployeeModalOPen(false)}
         onSubmit={handleAddEmployee}
       />

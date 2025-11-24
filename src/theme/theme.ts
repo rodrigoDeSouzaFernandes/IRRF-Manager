@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import { darkPalette, lightPalette } from "./palletes";
 
-
 export const createAppTheme = (mode: "light" | "dark") =>
   createTheme({
     palette: mode === "light" ? lightPalette : darkPalette,
@@ -41,10 +40,12 @@ export const createAppTheme = (mode: "light" | "dark") =>
 
       MuiAppBar: {
         styleOverrides: {
-            root: {
-                borderRadius: 0
-            }
-        }
-      }
+          root: ({ theme }) => ({
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+            borderRadius: 4,
+          }),
+        },
+      },
     },
   });

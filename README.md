@@ -2,6 +2,8 @@
 
 Sistema web desenvolvido em React.js com TypeScript para gerenciar funcionários e calcular o Imposto de Renda Retido na Fonte (IRRF) de cada um deles.
 
+![App demo](src/assets/app.gif)
+
 ## Funcionalidades
 
 - **Cadastrar Funcionário**: Modal para cadastro com validação de formulário
@@ -23,7 +25,7 @@ Sistema web desenvolvido em React.js com TypeScript para gerenciar funcionários
 1. Clone o repositório:
 
 ```bash
-git clone <url-do-repositorio>
+git clone git@github.com:rodrigoDeSouzaFernandes/IRRF-Manager.git
 cd irrf-manager
 ```
 
