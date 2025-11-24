@@ -20,6 +20,7 @@ import { FilterButton } from "../FilterSidebar/FilterButton";
 import FilterSidebar from "../FilterSidebar/FilterSidebar";
 import EmployeeFormModal from "../EmployeeFormModal/EmployeeFormModal";
 import DeleteEmployeeModal from "../DeleteEmployeeModal/DeleteEmployeeModal";
+import type { Employee } from "../../types/Employee";
 
 const EmployeeList: React.FC = () => {
   const {
@@ -156,7 +157,7 @@ const EmployeeList: React.FC = () => {
         open={isEditModalOpen}
         onClose={handleEditClose}
         onSubmit={handleEditSubmit}
-        employee={selectedEmployee}
+        employee={selectedEmployee as Employee | undefined}
         title="Editar funcionário"
       />
       <DeleteEmployeeModal
