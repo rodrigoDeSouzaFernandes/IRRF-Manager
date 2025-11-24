@@ -97,7 +97,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
             {hasActiveFilters && (
               <Button
                 variant="outlined"
-                color="secondary"
+                color="error"
                 fullWidth
                 onClick={onClearFilters}
                 sx={{ mt: 2 }}
