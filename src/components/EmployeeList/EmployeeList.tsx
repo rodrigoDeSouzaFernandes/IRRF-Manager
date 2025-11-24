@@ -19,6 +19,7 @@ import { useEmployeeList } from "./useEmployeeList";
 import { FilterButton } from "../FilterSidebar/FilterButton";
 import FilterSidebar from "../FilterSidebar/FilterSidebar";
 import EmployeeFormModal from "../EmployeeFormModal/EmployeeFormModal";
+import DeleteEmployeeModal from "../DeleteEmployeeModal/DeleteEmployeeModal";
 
 const EmployeeList: React.FC = () => {
   const {
@@ -36,6 +37,9 @@ const EmployeeList: React.FC = () => {
     setFilterCPF,
     selectedEmployee,
     isEditModalOpen,
+    handleDeleteConfirm,
+    handleDeleteClose,
+    isDeleteModalOpen,
   } = useEmployeeList();
 
   return (
@@ -154,6 +158,12 @@ const EmployeeList: React.FC = () => {
         onSubmit={handleEditSubmit}
         employee={selectedEmployee}
         title="Editar funcionário"
+      />
+      <DeleteEmployeeModal
+        open={isDeleteModalOpen}
+        onClose={handleDeleteClose}
+        onConfirm={handleDeleteConfirm}
+        employee={selectedEmployee}
       />
     </>
   );

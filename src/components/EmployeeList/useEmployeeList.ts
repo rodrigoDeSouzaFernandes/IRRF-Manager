@@ -19,7 +19,8 @@ export const useEmployeeList = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null
   );
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   const filteredEmployees = useMemo(() => {
     return employees.filter((emp) => {
@@ -38,7 +39,7 @@ export const useEmployeeList = () => {
 
   const handleDelete = (employee: Employee) => {
     setSelectedEmployee(employee);
-    // TODO: Implement delete modal
+    setIsDeleteModalOpen(true);
   };
 
   const handleEditSubmit = (data: EmployeeFormInput) => {
@@ -62,6 +63,11 @@ export const useEmployeeList = () => {
       );
     }
     setIsEditModalOpen(false);
+    setSelectedEmployee(null);
+  };
+
+  const handleDeleteClose = () => {
+    setIsDeleteModalOpen(false);
     setSelectedEmployee(null);
   };
 
@@ -89,6 +95,7 @@ export const useEmployeeList = () => {
     handleDelete,
     handleEditSubmit,
     handleEditClose,
+    handleDeleteClose,
     handleDeleteConfirm,
     handleClearFilters,
     filterSidebarOpen,
@@ -99,5 +106,6 @@ export const useEmployeeList = () => {
     setFilterName,
     selectedEmployee,
     isEditModalOpen,
+    isDeleteModalOpen,
   };
 };
