@@ -2,7 +2,7 @@ export interface Employee {
   name: string;
   cpf: string;
   grossSalary: number;
-  descontoPrevidencia: number;
+  pensionDiscount: number;
   dependents: number;
   baseSalary?: number;
   IRRFdiscount?: number;

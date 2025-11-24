@@ -11,7 +11,7 @@ describe("employeesSlice", () => {
     name: "João Silva",
     cpf: "12345678901",
     grossSalary: 5000,
-    descontoPrevidencia: 500,
+    pensionDiscount: 500,
     dependents: 2,
   };
 

@@ -10,7 +10,7 @@ const createEmployee = (): Employee => ({
   name: "João Silva",
   cpf: "12345678901",
   grossSalary: 5000,
-  descontoPrevidencia: 500,
+  pensionDiscount: 500,
   dependents: 2,
 });
 
@@ -18,7 +18,7 @@ const createFormData = (): EmployeeFormInput => ({
   name: "Maria Santos",
   cpf: "987.654.321-00",
   grossSalary: formatCurrency(3000).replace("R$", "").trim(),
-  descontoPrevidencia: formatCurrency(300).replace("R$", "").trim(),
+  pensionDiscount: formatCurrency(300).replace("R$", "").trim(),
   dependents: "1",
 });
 
@@ -64,7 +64,7 @@ describe("useEmployeeFormModal (hook)", () => {
       ...formData,
       cpf: "98765432100",
       grossSalary: 3000,
-      descontoPrevidencia: 300,
+      pensionDiscount: 300,
       dependents: 1,
     });
   });

@@ -14,7 +14,7 @@ export const employeeSchema = z.object({
       const num = parseCurrency(val);
       return num > 0;
     }, "Salário deve ser maior que zero"),
-  descontoPrevidencia: z
+  pensionDiscount: z
     .string()
     .nonempty("Campo obrigatório")
     .refine((val) => {

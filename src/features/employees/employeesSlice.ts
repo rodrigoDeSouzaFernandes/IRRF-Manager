@@ -13,28 +13,28 @@ const getInitialEmployees = (): Employee[] => {
       name: 'João Silva',
       cpf: '12345678901',
       grossSalary: 5000,
-      descontoPrevidencia: 500,
+      pensionDiscount: 500,
       dependents: 2,
     },
     {
       name: 'Maria Santos',
       cpf: '98765432100',
       grossSalary: 3000,
-      descontoPrevidencia: 300,
+      pensionDiscount: 300,
       dependents: 1,
     },
     {
       name: 'Pedro Oliveira',
       cpf: '11122233344',
       grossSalary: 8000,
-      descontoPrevidencia: 800,
+      pensionDiscount: 800,
       dependents: 0,
     },
     {
       name: 'Ana Costa',
       cpf: '55566677788',
       grossSalary: 2500,
-      descontoPrevidencia: 250,
+      pensionDiscount: 250,
       dependents: 3,
     },
   ];
@@ -42,7 +42,7 @@ const getInitialEmployees = (): Employee[] => {
   return fakeEmployees.map((emp) => {
     const baseSalary = calculateBaseSalary(
       emp.grossSalary,
-      emp.descontoPrevidencia,
+      emp.pensionDiscount,
       emp.dependents
     );
     const IRRFdiscount = calculateIRRF(baseSalary);
@@ -61,7 +61,7 @@ const employeesSlice = createSlice({
     addEmployee: (state, action: PayloadAction<Employee>) => {
       const baseSalary = calculateBaseSalary(
         action.payload.grossSalary,
-        action.payload.descontoPrevidencia,
+        action.payload.pensionDiscount,
         action.payload.dependents
       );
       const IRRFdiscount = calculateIRRF(baseSalary);
@@ -72,7 +72,7 @@ const employeesSlice = createSlice({
       if (index !== -1) {
         const baseSalary = calculateBaseSalary(
           action.payload.grossSalary,
-          action.payload.descontoPrevidencia,
+          action.payload.pensionDiscount,
           action.payload.dependents
         );
         const IRRFdiscount = calculateIRRF(baseSalary);

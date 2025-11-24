@@ -150,7 +150,7 @@ const EmployeeList: React.FC = () => {
                     </TableCell>
                     <TableCell align="right">
                       <Typography variant="body2" color="text.secondary">
-                        {formatCurrency(employee.descontoPrevidencia)}
+                        {formatCurrency(employee.pensionDiscount)}
                       </Typography>
                     </TableCell>
                     <TableCell align="center">

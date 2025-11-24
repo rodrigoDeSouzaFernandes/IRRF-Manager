@@ -21,7 +21,7 @@ const Home: React.FC = () => {
       name: data.name,
       cpf: data.cpf,
       grossSalary: Number(data.grossSalary),
-      descontoPrevidencia: Number(data.descontoPrevidencia),
+      pensionDiscount: Number(data.pensionDiscount),
       dependents: Number(data.dependents),
     };
 

@@ -16,7 +16,7 @@ const mockEmployees: Employee[] = [
     name: "João Silva",
     cpf: "12345678901",
     grossSalary: 5000,
-    descontoPrevidencia: 500,
+    pensionDiscount: 500,
     dependents: 2,
     baseSalary: 4000,
     IRRFdiscount: 100,
@@ -25,7 +25,7 @@ const mockEmployees: Employee[] = [
     name: "Maria Santos",
     cpf: "98765432100",
     grossSalary: 3000,
-    descontoPrevidencia: 300,
+    pensionDiscount: 300,
     dependents: 1,
     baseSalary: 2500,
     IRRFdiscount: 50,
@@ -91,7 +91,7 @@ describe("useEmployeeList", () => {
       name: "João Silva",
       cpf: mockEmployees[0].cpf,
       grossSalary: formatCurrency(6000),
-      descontoPrevidencia: formatCurrency(600),
+      pensionDiscount: formatCurrency(600),
       dependents: "3",
     };
 
@@ -101,7 +101,7 @@ describe("useEmployeeList", () => {
 
     const updatedEmployee = store.getState().employees.list[0];
     expect(updatedEmployee.grossSalary).toBe(6000);
-    expect(updatedEmployee.descontoPrevidencia).toBe(600);
+    expect(updatedEmployee.pensionDiscount).toBe(600);
     expect(updatedEmployee.dependents).toBe(3);
     expect(result.current.selectedEmployee).toBeNull();
     expect(result.current.isEditModalOpen).toBe(false);

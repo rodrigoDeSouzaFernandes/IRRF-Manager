@@ -29,7 +29,7 @@ export const useEmployeeFormModal = ({
       name: "",
       cpf: "",
       grossSalary: "",
-      descontoPrevidencia: "",
+      pensionDiscount: "",
       dependents: "0",
     },
   });
@@ -43,8 +43,8 @@ export const useEmployeeFormModal = ({
         formatCurrency(employee.grossSalary).replace("R$", "").trim()
       );
       setValue(
-        "descontoPrevidencia",
-        formatCurrency(employee.descontoPrevidencia).replace("R$", "").trim()
+        "pensionDiscount",
+        formatCurrency(employee.pensionDiscount).replace("R$", "").trim()
       );
       setValue("dependents", employee.dependents.toString());
     } else {
@@ -57,7 +57,7 @@ export const useEmployeeFormModal = ({
       ...data,
       cpf: unformatCPF(data.cpf),
       grossSalary: parseCurrency(data.grossSalary),
-      descontoPrevidencia: parseCurrency(data.descontoPrevidencia),
+      pensionDiscount: parseCurrency(data.pensionDiscount),
       dependents: Number(data.dependents),
     } as any);
     reset();

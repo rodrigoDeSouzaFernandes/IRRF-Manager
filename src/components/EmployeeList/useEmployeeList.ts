@@ -48,17 +48,18 @@ export const useEmployeeList = () => {
         typeof data.grossSalary === "string"
           ? parseCurrency(data.grossSalary)
           : data.grossSalary;
-      const descontoPrevidencia =
-        typeof data.descontoPrevidencia === "string"
-          ? parseCurrency(data.descontoPrevidencia)
-          : data.descontoPrevidencia;
+      const pensionDiscount =
+        typeof data.pensionDiscount === "string"
+          ? parseCurrency(data.pensionDiscount)
+          : data.pensionDiscount;
 
       dispatch(
         updateEmployee({
           ...data,
           cpf: selectedEmployee.cpf,
           grossSalary,
-          descontoPrevidencia,
+          pensionDiscount,
+          dependents: Number(data.dependents)
         } as Employee)
       );
     }

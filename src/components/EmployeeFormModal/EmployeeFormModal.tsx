@@ -99,7 +99,7 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Controller
-                name="descontoPrevidencia"
+                name="pensionDiscount"
                 control={control}
                 render={({ field }) => (
                   <CurrencyInput
@@ -107,8 +107,8 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                     fullWidth
                     value={field.value}
                     onChange={field.onChange}
-                    error={!!errors.descontoPrevidencia}
-                    helperText={errors.descontoPrevidencia?.message}
+                    error={!!errors.pensionDiscount}
+                    helperText={errors.pensionDiscount?.message}
                     slotProps={{
                       htmlInput: {
                         inputMode: "numeric",
