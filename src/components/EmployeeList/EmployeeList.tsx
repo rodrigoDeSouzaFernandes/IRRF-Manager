@@ -1,7 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { type RootState, type AppDispatch } from "../../store";
-import { deleteEmployee } from "../../features/employees/employeesSlice";
+import React from "react";
+
 import {
   Table,
   TableHead,
@@ -16,88 +14,18 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-  formatCPF,
-  formatCurrency,
-  unformatCPF,
-  parseCurrency,
-} from "../../utils/format";
-import { type Employee } from "../../types/Employee";
-
-import { updateEmployee } from "../../features/employees/employeesSlice";
+import { formatCPF, formatCurrency } from "../../utils/format";
+import { useEmployeeList } from "./useEmployeeList";
 
 const EmployeeList: React.FC = () => {
-  const employees = useSelector((state: RootState) => state.employees.list);
-  const dispatch = useDispatch<AppDispatch>();
-  const [filterName, setFilterName] = useState("");
-  const [filterCPF, setFilterCPF] = useState("");
-
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
-    null
-  );
-
-  const filteredEmployees = useMemo(() => {
-    return employees.filter((emp) => {
-      const nameMatch = emp.name
-        .toLowerCase()
-        .includes(filterName.toLowerCase());
-      const cpfMatch = emp.cpf.includes(unformatCPF(filterCPF));
-      return nameMatch && cpfMatch;
-    });
-  }, [employees, filterName, filterCPF]);
-
-  const handleEdit = (employee: Employee) => {
-    setSelectedEmployee(employee);
-    // TODO: Implement edit modal
-  };
-
-  const handleDelete = (employee: Employee) => {
-    setSelectedEmployee(employee);
-    // TODO: Implement delete modal
-  };
-
-  const handleEditSubmit = (data: {
-    name: string;
-    cpf: string;
-    grossSalary: string | number;
-    descontoPrevidencia: string | number;
-    dependents: number;
-  }) => {
-    if (selectedEmployee) {
-      const grossSalary =
-        typeof data.grossSalary === "string"
-          ? parseCurrency(data.grossSalary)
-          : data.grossSalary;
-      const descontoPrevidencia =
-        typeof data.descontoPrevidencia === "string"
-          ? parseCurrency(data.descontoPrevidencia)
-          : data.descontoPrevidencia;
-
-      dispatch(
-        updateEmployee({
-          ...data,
-          cpf: selectedEmployee.cpf,
-          grossSalary,
-          descontoPrevidencia,
-        } as Employee)
-      );
-    }
-    // TODO: Implement edit modal
-    setSelectedEmployee(null);
-  };
-
-  const handleDeleteConfirm = () => {
-    if (selectedEmployee) {
-      dispatch(deleteEmployee(selectedEmployee.cpf));
-    }
-    // TODO: Implement delete modal
-    setSelectedEmployee(null);
-  };
-
-  const handleClearFilters = () => {
-    setFilterName("");
-    setFilterCPF("");
-  };
+  const {
+    filteredEmployees,
+    handleEdit,
+    handleDelete,
+    handleEditSubmit,
+    handleDeleteConfirm,
+    handleClearFilters,
+  } = useEmployeeList();
 
   return (
     <>
