@@ -49,7 +49,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
       <IconButton
         size="small"
         onClick={handleClick}
-        aria-label="ações"
+        aria-label="actions"
         sx={{
           color: "text.secondary",
           "&:hover": {

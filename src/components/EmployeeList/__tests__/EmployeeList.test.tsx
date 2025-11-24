@@ -97,8 +97,13 @@ describe("EmployeeList (component)", () => {
   it("calls handleEdit when edit button is clicked", async () => {
     const { hookValue, user } = renderComponent();
 
-    const editButtons = screen.getAllByLabelText("editar");
-    await user.click(editButtons[0]);
+    const actionsDropdown = screen.getAllByLabelText("actions");
+    await user.click(actionsDropdown[0]);
+
+    const editButton = await screen.findByRole("menuitem", {
+      name: /Edit/i,
+    });
+    await user.click(editButton);
 
     expect(hookValue.handleEdit).toHaveBeenCalledWith(mockEmployees[0]);
   });
@@ -106,8 +111,13 @@ describe("EmployeeList (component)", () => {
   it("calls handleDelete when delete button is clicked", async () => {
     const { hookValue, user } = renderComponent();
 
-    const deleteButtons = screen.getAllByLabelText("excluir");
-    await user.click(deleteButtons[0]);
+    const actionsDropdown = screen.getAllByLabelText("actions");
+    await user.click(actionsDropdown[0]);
+
+    const removeButton = await screen.findByRole("menuitem", {
+      name: /Excluir/i,
+    });
+    await user.click(removeButton);
 
     expect(hookValue.handleDelete).toHaveBeenCalledWith(mockEmployees[0]);
   });
@@ -133,4 +143,3 @@ describe("EmployeeList (component)", () => {
     expect(screen.getByText("Confirmar Exclusão")).toBeInTheDocument();
   });
 });
-
