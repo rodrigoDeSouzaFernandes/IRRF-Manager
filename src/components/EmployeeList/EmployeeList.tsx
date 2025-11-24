@@ -16,6 +16,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { formatCPF, formatCurrency } from "../../utils/format";
 import { useEmployeeList } from "./useEmployeeList";
+import { FilterButton } from "../FilterSidebar/FilterButton";
+import FilterSidebar from "../FilterSidebar/FilterSidebar";
 
 const EmployeeList: React.FC = () => {
   const {
@@ -25,6 +27,12 @@ const EmployeeList: React.FC = () => {
     handleEditSubmit,
     handleDeleteConfirm,
     handleClearFilters,
+    filterSidebarOpen,
+    setFilterSidebarOpen,
+    filterName,
+    filterCPF,
+    setFilterName,
+    setFilterCPF,
   } = useEmployeeList();
 
   return (
@@ -39,6 +47,7 @@ const EmployeeList: React.FC = () => {
           }}
         >
           <Typography variant="h6">Lista de Funcionários</Typography>
+          <FilterButton onClick={() => setFilterSidebarOpen(true)} />
         </Box>
         <TableContainer>
           <Table>
@@ -126,6 +135,16 @@ const EmployeeList: React.FC = () => {
           </Table>
         </TableContainer>
       </Paper>
+      <FilterSidebar
+        open={filterSidebarOpen}
+        onClose={() => setFilterSidebarOpen(false)}
+        filterName={filterName}
+        filterCPF={filterCPF}
+        onFilterNameChange={setFilterName}
+        onFilterCPFChange={setFilterCPF}
+        onClearFilters={handleClearFilters}
+        employeeCount={filteredEmployees.length}
+      />
     </>
   );
 };

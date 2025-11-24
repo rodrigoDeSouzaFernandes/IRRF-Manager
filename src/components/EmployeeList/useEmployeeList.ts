@@ -11,8 +11,9 @@ import {
 export const useEmployeeList = () => {
   const employees = useSelector((state: RootState) => state.employees.list);
   const dispatch = useDispatch<AppDispatch>();
-  const [filterName, setFilterName] = useState("");
-  const [filterCPF, setFilterCPF] = useState("");
+  const [filterName, setFilterName] = useState<string>("");
+  const [filterCPF, setFilterCPF] = useState<string>("");
+  const [filterSidebarOpen, setFilterSidebarOpen] = useState<boolean>(false);
 
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null
@@ -88,5 +89,12 @@ export const useEmployeeList = () => {
     handleEditSubmit,
     handleDeleteConfirm,
     handleClearFilters,
+    filterSidebarOpen,
+    setFilterSidebarOpen,
+    filterCPF,
+    filterName,
+    setFilterCPF,
+    setFilterName
+
   };
 };
