@@ -45,7 +45,7 @@ const EmployeeList: React.FC = () => {
 
   return (
     <>
-      <Paper sx={{ mt: 4, p: 3 }}>
+      <Paper elevation={4} sx={{ mt: 2, mb: 4, p: 3 }}>
         <Box
           sx={{
             display: "flex",

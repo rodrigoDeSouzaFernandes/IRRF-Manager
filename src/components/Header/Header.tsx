@@ -15,9 +15,9 @@ const Header: React.FC = () => {
   const { mode, toggleMode } = useThemeMode();
 
   return (
-    <AppBar position="static" elevation={2} sx={{br:0}}>
+    <AppBar position="static" elevation={2} sx={{ br: 0 }}>
       <Container>
-        <Toolbar >
+        <Toolbar disableGutters>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Gerenciador de Funcionários
           </Typography>

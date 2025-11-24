@@ -33,7 +33,7 @@ const Home: React.FC = () => {
     <>
       <Box>
         <Header />
-        <Container>
+        <Container sx={{ display: "flex", flexDirection: "column" }}>
           <Button
             variant="contained"
             sx={{ width: "fit-content", ml: "auto", mt: 2 }}

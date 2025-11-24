@@ -123,7 +123,7 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ p: 2 }}>
           <Button onClick={handleClose} color="inherit">
             Cancelar
           </Button>

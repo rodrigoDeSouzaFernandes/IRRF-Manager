@@ -38,7 +38,9 @@ const DeleteEmployeeModal: React.FC<DeleteEmployeeModalProps> = ({
         <Typography variant="body1" gutterBottom>
           Tem certeza que deseja excluir o funcionário abaixo?
         </Typography>
-        <Box sx={{ mt: 2, p: 2, bgcolor: "grey.100", borderRadius: 1 }}>
+        <Box
+          sx={{ mt: 2, p: 2, bgcolor: "background.default", borderRadius: 1 }}
+        >
           <Typography variant="body2" sx={{ mb: 1 }}>
             <strong>Nome:</strong> {employee.name}
           </Typography>
@@ -54,7 +56,7 @@ const DeleteEmployeeModal: React.FC<DeleteEmployeeModalProps> = ({
           Esta ação não pode ser desfeita.
         </Typography>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ p: 2 }}>
         <Button onClick={onClose} color="inherit">
           Cancelar
         </Button>
