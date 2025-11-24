@@ -22,7 +22,7 @@ const Home: React.FC = () => {
       cpf: data.cpf,
       grossSalary: Number(data.grossSalary),
       descontoPrevidencia: Number(data.descontoPrevidencia),
-      dependents: data.dependents,
+      dependents: Number(data.dependents),
     };
 
     dispatch(addEmployee(employee));

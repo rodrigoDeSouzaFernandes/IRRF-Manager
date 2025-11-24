@@ -92,7 +92,7 @@ describe("useEmployeeList", () => {
       cpf: mockEmployees[0].cpf,
       grossSalary: formatCurrency(6000),
       descontoPrevidencia: formatCurrency(600),
-      dependents: 3,
+      dependents: "3",
     };
 
     act(() => {

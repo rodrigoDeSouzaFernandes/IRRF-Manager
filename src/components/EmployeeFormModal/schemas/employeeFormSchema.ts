@@ -22,7 +22,10 @@ export const employeeSchema = z.object({
       return num >= 0;
     }, "Desconto deve ser maior ou igual a zero"),
   dependents: z
-    .number()
-    .int("Dependentes deve ser um número inteiro")
-    .min(0, "Campo obrigatório, insira um numero maior ou igual a zero"),
+    .string()
+    .nonempty("Campo obrigatório")
+    .refine((val) => {
+      const num = Number(val);
+      return !isNaN(num) && Number.isInteger(num) && num >= 0;
+    }, "Dependentes deve ser um número inteiro maior ou igual a zero"),
 });

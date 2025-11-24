@@ -14,6 +14,7 @@ import CurrencyInput from "../CurrencyInput/CurrencyInput";
 import { useEmployeeFormModal } from "./useEmployeeFormModal";
 import type { EmployeeFormModalProps } from "./types";
 import { Controller } from "react-hook-form";
+import { beforeInput } from "../../utils/beforeInput";
 
 const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
   open,
@@ -46,6 +47,11 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                 error={!!errors.name}
                 helperText={errors.name?.message}
                 autoFocus
+                slotProps={{
+                  htmlInput: {
+                    maxLength: 60,
+                  },
+                }}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
@@ -59,9 +65,12 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                 error={!!errors.cpf}
                 helperText={errors.cpf?.message}
                 disabled={!!employee}
-                inputProps={{
-                  maxLength: 14,
-                  readOnly: !!employee,
+                slotProps={{
+                  htmlInput: {
+                    maxLength: 14,
+                    readOnly: !!employee,
+                    inputMode: "numeric",
+                  },
                 }}
               />
             </Grid>
@@ -78,6 +87,12 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                     onChange={field.onChange}
                     error={!!errors.grossSalary}
                     helperText={errors.grossSalary?.message}
+                    slotProps={{
+                      htmlInput: {
+                        maxLength: 17,
+                        inputMode: "numeric",
+                      },
+                    }}
                   />
                 )}
               />
@@ -94,31 +109,42 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                     onChange={field.onChange}
                     error={!!errors.descontoPrevidencia}
                     helperText={errors.descontoPrevidencia?.message}
+                    slotProps={{
+                      htmlInput: {
+                        inputMode: "numeric",
+                        maxLength: 17,
+                      },
+                    }}
                   />
                 )}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <TextField
-                label="Número de Dependentes"
-                type="text"
-                fullWidth
-                inputProps={{ step: "1", min: "0" }}
-                {...register("dependents", {
-                  valueAsNumber: true,
-                  setValueAs: (v) => (v === "" ? -1 : Number(v)),
-                  required: "Campo obrigatório",
-                })}
-                error={!!errors.dependents}
-                helperText={errors.dependents?.message}
-                onBeforeInput={(event) => {
-                  const char = event.data;
-                  const notNumber = /^\D$/;
-                  if (!char) return;
-                  if (notNumber.test(char)) {
-                    event.preventDefault();
-                  }
-                }}
+              <Controller
+                name="dependents"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Número de Dependentes"
+                    fullWidth
+                    value={field.value || ""}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        e.target.value = Number(e.target.value).toString();
+                      }
+                      field.onChange(e);
+                    }}
+                    error={!!errors.dependents}
+                    helperText={errors.dependents?.message}
+                    onBeforeInput={beforeInput.onlyNumbers}
+                    slotProps={{
+                      htmlInput: {
+                        inputMode: "numeric",
+                        maxLength: 2,
+                      },
+                    }}
+                  />
+                )}
               />
             </Grid>
           </Grid>

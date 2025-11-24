@@ -19,7 +19,7 @@ const createFormData = (): EmployeeFormInput => ({
   cpf: "987.654.321-00",
   grossSalary: formatCurrency(3000).replace("R$", "").trim(),
   descontoPrevidencia: formatCurrency(300).replace("R$", "").trim(),
-  dependents: 1,
+  dependents: "1",
 });
 
 describe("useEmployeeFormModal (hook)", () => {
@@ -37,7 +37,7 @@ describe("useEmployeeFormModal (hook)", () => {
 
     expect(result.current.watch("name")).toBe(employee.name);
     expect(result.current.watch("cpf")).toBe("123.456.789-01");
-    expect(result.current.watch("dependents")).toBe(employee.dependents);
+    expect(result.current.watch("dependents")).toBe(employee.dependents.toString());
   });
 
   it("formats CPF input on change", () => {
@@ -65,6 +65,7 @@ describe("useEmployeeFormModal (hook)", () => {
       cpf: "98765432100",
       grossSalary: 3000,
       descontoPrevidencia: 300,
+      dependents: 1,
     });
   });
 
