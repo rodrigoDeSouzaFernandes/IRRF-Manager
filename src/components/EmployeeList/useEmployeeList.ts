@@ -7,7 +7,7 @@ import {
   deleteEmployee,
   updateEmployee,
 } from "../../features/employees/employeesSlice";
-import type { EmployeeFormInput } from "../EmployeeFormModal/EmployeeFormModal";
+import type { EmployeeFormInput } from "../EmployeeFormModal/types";
 
 export const useEmployeeList = () => {
   const employees = useSelector((state: RootState) => state.employees.list);

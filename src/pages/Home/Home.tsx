@@ -3,13 +3,12 @@ import { Box, Button } from "@mui/material";
 
 import Header from "../../components/Header/Header";
 import EmployeeList from "../../components/EmployeeList/EmployeeList";
-import EmployeeFormModal, {
-  type EmployeeFormInput,
-} from "../../components/EmployeeFormModal/EmployeeFormModal";
+import EmployeeFormModal from "../../components/EmployeeFormModal/EmployeeFormModal";
 import { Add } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../../features/employees/employeesSlice";
 import { type Employee } from "../../types/Employee";
+import type { EmployeeFormInput } from "../../components/EmployeeFormModal/types";
 
 const Home: React.FC = () => {
   const [createEmployeeModalOpen, setCreateEmployeeModalOPen] =

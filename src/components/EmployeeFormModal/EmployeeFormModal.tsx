@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import React from "react";
+
 import {
   Dialog,
   DialogTitle,
@@ -12,51 +10,10 @@ import {
 } from "@mui/material";
 
 import Grid from "@mui/material/Grid";
-
-import { type Employee } from "../../types/Employee";
-import {
-  formatCPF,
-  unformatCPF,
-  parseCurrency,
-  formatCurrency,
-} from "../../utils/format";
 import CurrencyInput from "../CurrencyInput/CurrencyInput";
-
-const employeeSchema = z.object({
-  name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
-  cpf: z
-    .string()
-    .min(11, "CPF inválido")
-    .refine((val) => unformatCPF(val).length === 11, "CPF deve ter 11 dígitos"),
-  grossSalary: z
-    .string()
-    .nonempty("Campo obrigatório")
-    .refine((val) => {
-      const num = parseCurrency(val);
-      return num > 0;
-    }, "Salário deve ser maior que zero"),
-  descontoPrevidencia: z
-    .string()
-    .nonempty("Campo obrigatório")
-    .refine((val) => {
-      const num = parseCurrency(val);
-      return num >= 0;
-    }, "Desconto deve ser maior ou igual a zero"),
-  dependents: z
-    .number()
-    .int("Dependentes deve ser um número inteiro")
-    .min(0, "Campo obrigatório, insira um numero maior ou igual a zero"),
-});
-
-export type EmployeeFormInput = z.infer<typeof employeeSchema>;
-
-interface EmployeeFormModalProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (data: EmployeeFormInput) => void;
-  employee?: Employee | null;
-  title: string;
-}
+import { useEmployeeFormModal } from "./useEmployeeFormModal";
+import type { EmployeeFormModalProps } from "./types";
+import { Controller } from "react-hook-form";
 
 const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
   open,
@@ -67,63 +24,13 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
 }) => {
   const {
     register,
+    control,
     handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-    watch,
-  } = useForm<EmployeeFormInput>({
-    resolver: zodResolver(employeeSchema),
-    defaultValues: {
-      name: "",
-      cpf: "",
-      grossSalary: "",
-      descontoPrevidencia: "",
-      dependents: 0,
-    },
-  });
-
-  useEffect(() => {
-    if (employee) {
-      setValue("name", employee.name);
-      setValue("cpf", formatCPF(employee.cpf));
-      setValue(
-        "grossSalary",
-        formatCurrency(employee.grossSalary).replace("R$", "").trim()
-      );
-      setValue(
-        "descontoPrevidencia",
-        formatCurrency(employee.descontoPrevidencia).replace("R$", "").trim()
-      );
-      setValue("dependents", employee.dependents);
-    } else {
-      reset();
-    }
-  }, [employee, setValue, reset]);
-
-  const handleFormSubmit = (data: EmployeeFormInput) => {
-    onSubmit({
-      ...data,
-      cpf: unformatCPF(data.cpf),
-      grossSalary: parseCurrency(data.grossSalary),
-      descontoPrevidencia: parseCurrency(data.descontoPrevidencia),
-    } as any);
-    reset();
-    onClose();
-  };
-
-  const handleClose = () => {
-    reset();
-    onClose();
-  };
-
-  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const formatted = formatCPF(value);
-    setValue("cpf", formatted, { shouldValidate: true });
-  };
-
-  const dependents = watch("dependents") || 0;
+    handleFormSubmit,
+    handleClose,
+    handleCPFChange,
+    errors,
+  } = useEmployeeFormModal({ onClose, onSubmit, employee });
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -141,7 +48,6 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                 autoFocus
               />
             </Grid>
-
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 label="CPF"
@@ -161,29 +67,35 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6 }}>
-              <CurrencyInput
-                label="Salário Bruto"
-                fullWidth
-                value={watch("grossSalary") || ""}
-                onChange={(value) =>
-                  setValue("grossSalary", value, { shouldValidate: true })
-                }
-                error={!!errors.grossSalary}
-                helperText={errors.grossSalary?.message}
+              <Controller
+                name="grossSalary"
+                control={control}
+                render={({ field }) => (
+                  <CurrencyInput
+                    label="Salário Bruto"
+                    fullWidth
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!errors.grossSalary}
+                    helperText={errors.grossSalary?.message}
+                  />
+                )}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <CurrencyInput
-                label="Desconto Previdência"
-                fullWidth
-                value={watch("descontoPrevidencia") || ""}
-                onChange={(value) =>
-                  setValue("descontoPrevidencia", value, {
-                    shouldValidate: true,
-                  })
-                }
-                error={!!errors.descontoPrevidencia}
-                helperText={errors.descontoPrevidencia?.message}
+              <Controller
+                name="descontoPrevidencia"
+                control={control}
+                render={({ field }) => (
+                  <CurrencyInput
+                    label="Desconto Previdência"
+                    fullWidth
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!errors.descontoPrevidencia}
+                    helperText={errors.descontoPrevidencia?.message}
+                  />
+                )}
               />
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
@@ -197,7 +109,6 @@ const EmployeeFormModal: React.FC<EmployeeFormModalProps> = ({
                   setValueAs: (v) => (v === "" ? -1 : Number(v)),
                   required: "Campo obrigatório",
                 })}
-                value={dependents}
                 error={!!errors.dependents}
                 helperText={errors.dependents?.message}
                 onBeforeInput={(event) => {
